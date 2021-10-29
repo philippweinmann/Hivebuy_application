@@ -22,5 +22,5 @@ admin.autodiscover()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('apps/mydjangoapp/', include('apps.mydjangoapp.urls')),
+    path('apps/first_app/', include('apps.first_app.urls')),
 ]
