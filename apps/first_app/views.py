@@ -52,3 +52,16 @@ def crudops(request):
     dreamreal.save()
 
     return HttpResponse(res)
+
+
+def show_bansky(request):
+    res = show_bansky_s3()
+    return HttpResponse(res)
+
+def show_bansky_s3():
+   image_url = 'https://hivebuyexercicebucket.s3.eu-central-1.amazonaws.com/bansky.jpg'
+   res = "Image loaded through S3: </br>"
+   res += '<img src=' + image_url + ' alt="bansky image" width="512">'
+
+   return res
+
