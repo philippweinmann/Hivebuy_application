@@ -2,6 +2,7 @@ from django.shortcuts import render
 import datetime
 from .hide_aws import MediaDownloadView
 from .models import Dreamreal
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -59,6 +60,13 @@ def show_bansky(request):
     res = show_bansky_s3()
     res += '<br/>'
     res += show_bansky_hidden()
+    res += '<br/>'
+    res += "Image loaded through django backend if you are authenticated: <br/>"
+    if request.user.is_authenticated:
+        res += show_bansky_hidden_with_user_auth(request)
+    else :
+        res += '<br/>'
+        res += "Sorry you cannot access this element if you are not logged in"
     return HttpResponse(res)
 
 
@@ -73,4 +81,9 @@ def show_bansky_hidden():
     base_64_image = mediaDownloadView.get()
     res = "<br/>Image loaded from django backend: <br/>"
     res += '<img src=' + base_64_image + ' alt="bansky image" width="512">'
+    res += '<br/>'
     return res
+
+@login_required
+def show_bansky_hidden_with_user_auth(request):
+    return show_bansky_hidden()
