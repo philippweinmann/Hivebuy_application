@@ -1,26 +1,3 @@
-'''
-import requests
-import re
-from django.http import HttpResponse
-
-
-def proxy_file():
-    # Set up the image URL and filename
-    image_url = 'https://hivebuyexercicebucket.s3.eu-central-1.amazonaws.com/bansky.jpg'
-    file_location = download_media(image_url)
-    return file_location
-
-
-def download_media(url):
-    r = requests.get(url, allow_redirects=True)
-    if url.find('/'):
-        filename = url.rsplit('/', 1)[1]
-        file_location = "ressources/" + filename
-        open(file_location, 'wb').write(r.content)
-        return file_location
-    
-'''
-
 from django.http import response
 import requests
 import boto3
