@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import datetime
+from .hide_aws import MediaDownloadView
 from .models import Dreamreal
 
 # Create your views here.
@@ -56,12 +57,20 @@ def crudops(request):
 
 def show_bansky(request):
     res = show_bansky_s3()
+    res += '<br/>'
+    res += show_bansky_hidden()
     return HttpResponse(res)
 
+
 def show_bansky_s3():
-   image_url = 'https://hivebuyexercicebucket.s3.eu-central-1.amazonaws.com/bansky.jpg'
-   res = "Image loaded through S3: </br>"
-   res += '<img src=' + image_url + ' alt="bansky image" width="512">'
+    image_url = 'https://hivebuyexercicebucket.s3.eu-central-1.amazonaws.com/bansky.jpg'
+    res = "Image loaded through S3: </br>"
+    res += '<img src=' + image_url + ' alt="bansky image" width="512">'
+    return res
 
-   return res
-
+def show_bansky_hidden():
+    mediaDownloadView = MediaDownloadView()
+    base_64_image = mediaDownloadView.get()
+    res = "<br/>Image loaded from django backend: <br/>"
+    res += '<img src=' + base_64_image + ' alt="bansky image" width="512">'
+    return res
